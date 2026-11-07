@@ -1,16 +1,19 @@
 body{
     background-color: #0A0816;
-     font-family:  "Meiryo", "Yu Gothic", "MS Gothic",;
+     font-family:  "Meiryo", "Yu Gothic", "MS Gothic";
 }
 
 .container{
     display: flex;
     flex-direction: column;
+    
 }
 
 .cima{
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
 }
 img{
   width: 100%;
@@ -31,24 +34,61 @@ img{
     border-radius: 5px;
     box-sizing: border-box;
     padding: 10px 20px;
+    align-items: flex-end;
     font-size: 12px;
+    text-decoration: none;
+     color: white;
 }
 .quadrados:hover{
 border: 1px solid #FF3DF2 ;
 border-radius: 5px;
 box-shadow: 0px 0px 20px #FF3DF2;
+cursor: pointer;
+animation: mudança normal 1s ;
 }
 
-.quadrados a{
-    text-decoration: none;
-    color: white;
-}
-
-.quadrados a:hover{
-  animation: mudança normal 1s ;
-}
 
 @keyframes mudança{
     0%{color: white;}
     100%{color: #FF3DF2;}
+}
+
+.linha{
+    width: 100%;
+  height: 2px;
+    background-color: #110d25;
+}
+
+.meio {
+   display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.texto{
+   display: flex;
+    flex-direction: column;
+}
+
+.separado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.direita{
+   display: flex;
+    position: relative;
+    flex-direction: row;
+    font-size: 5rem;
+    white-space: nowrap;
+    align-self: center;
+     font-size: 48px;
+  font-weight: bold;
+  color: transparent; 
+  -webkit-text-fill-color: transparent; 
+  -webkit-text-stroke: 1px #FF3DF2;
 }
