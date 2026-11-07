@@ -72,13 +72,22 @@ body {
 }
 
 .texto {
-    display: flex;
+   display: flex;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 650px;
     z-index: 2;
-    gap: 1px;
+    gap: 8px;
 }
-
+.apresentacao {
+    margin-top: 12px;
+    margin-bottom: 40px;
+}
+.texto h1 {
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+}
 .direita {
     display: flex;
     position: absolute;
@@ -110,6 +119,8 @@ body {
 
 .branco {
     color: white;
+    padding: 0;
+    margin: 0px;
 }
 
 .rosa {
@@ -203,5 +214,23 @@ body {
 }
 
 .asistidos{
-    padding-inline: -10px;
+    display: inline;
+   align-items: baseline;
+    gap: 8px; 
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.asistidos h2 {
+    color: #2DE2FF; 
+    font-size: 1.5rem;
+    margin: 10px;
+}
+
+.asistidos h1 {
+    color: white;
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: normal;
 }
