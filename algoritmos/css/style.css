@@ -1,34 +1,35 @@
-body{
+body {
     background-color: #0A0816;
-     font-family:  "Meiryo", "Yu Gothic", "MS Gothic";
+    font-family: "Meiryo", "Yu Gothic", "MS Gothic";
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
-    
 }
 
-.cima{
+.cima {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     align-items: center;
 }
-img{
-  width: 100%;
+
+/* Estilo geral para a logo ou imagens soltas fora dos cards */
+.logo img {
+    width: 100%;
     height: 100%;
     max-width: 250px;
     max-height: 250px;
 }
 
-.seçoes{
+.seçoes {
     display: flex;
     gap: 40px;
     justify-content: flex-end;
-    
 }
-.quadrados{
+
+.quadrados {
     display: flex;
     border: 1px solid transparent;
     border-radius: 5px;
@@ -37,111 +38,104 @@ img{
     align-items: flex-end;
     font-size: 12px;
     text-decoration: none;
-     color: white;
-}
-.quadrados:hover{
-border: 1px solid #FF3DF2 ;
-border-radius: 5px;
-box-shadow: 0px 0px 20px #FF3DF2;
-cursor: pointer;
-animation: mudança normal 1s ;
+    color: white;
 }
 
-
-@keyframes mudança{
-    0%{color: white;}
-    100%{color: #FF3DF2;}
+.quadrados:hover {
+    border: 1px solid #FF3DF2;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px #FF3DF2;
+    cursor: pointer;
+    animation: mudança normal 1s;
 }
 
-.linha{
+@keyframes mudança {
+    0% { color: white; }
+    100% { color: #FF3DF2; }
+}
+
+.linha {
     width: 100%;
-  height: 2px;
+    height: 2px;
     background-color: #110d25;
 }
 
 .meio {
-   display: flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
-    max-width: 600px; /* Limita a largura para o texto não esticar demais */
+    max-width: 600px;
     z-index: 2;
 }
 
-.texto{
-   display: flex;
+.texto {
+    display: flex;
     flex-direction: column;
     max-width: 600px;
     z-index: 2;
     gap: 1px;
-    
 }
 
-.separado{
+.direita {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.direita{
-   display: flex;
     position: absolute;
     flex-direction: row;
-    font-size: 5rem;
     margin-left: 42%;
     margin-bottom: 250px;
     white-space: nowrap;
     align-self: center;
-     font-size: 250px;
-  font-weight: bold;
-  color: transparent; 
-  -webkit-text-fill-color: transparent; 
-  -webkit-text-stroke: 1px #FF3DF2;
-  text-shadow: 0px 0px 30px #FF3DF2;
-  pointer-events: none;
-  opacity: 0.5;
-  z-index: 1;
+    font-size: 250px;
+    font-weight: bold;
+    color: transparent; 
+    -webkit-text-fill-color: transparent; 
+    -webkit-text-stroke: 1px #FF3DF2;
+    text-shadow: 0px 0px 30px #FF3DF2;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 1;
 }
 
-.eu{
-   display: inline;
-   color: #2DE2FF;
+.eu {
+    display: inline;
+    color: #2DE2FF;
 }
-.nome{
+
+.nome {
     display: inline;
     color: #FF3DF2;
 }
 
-.branco{
+.branco {
     color: white;
 }
 
-.rosa{
-   color: #FF3DF2;
+.rosa {
+    color: #FF3DF2;
 }
 
-.azul{
+.azul {
     color: #2DE2FF;
 }
 
-.roxo{
+.roxo {
     color: #A29FD0;
 }
 
-.visiveis a{
+.visiveis a {
     display: inline;
     text-decoration: none;
     padding: 10px;
 }
 
-.dash{
-    color:#2DE2FF;
+.dash {
+    color: #2DE2FF;
 }
 
-.sobre{
-  background: linear-gradient(90deg, white, #A29FD0, #2DE2FF, white);
+.sobre {
+    background: linear-gradient(90deg, white, #A29FD0, #2DE2FF, white);
     background-size: 300% 100%; 
     animation: cor_sobre 4s linear infinite;   
     border-radius: 20px;
@@ -150,10 +144,60 @@ animation: mudança normal 1s ;
 }
 
 @keyframes cor_sobre {
-  0% {
-        background-position: 0% 50%; 
-    }
-    100% {
-        background-position: 100% 50%; 
-    }
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.baixo {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+    padding: 40px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* O card de cada anime */
+.kpis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #141230; 
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 15px;
+    width: 220px; /* Mantém um tamanho padrão para todos os cards ficarem alinhados */
+    box-sizing: border-box;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.kpis:hover {
+    transform: translateY(-5px); 
+    border-color: #2DE2FF;
+    box-shadow: 0px 5px 20px rgba(45, 226, 255, 0.2);
+}
+
+/* Imagem dentro do card */
+.kpis img {
+    width: 100%;
+    height: 180px;
+    object-fit: fill; /* Cobre o espaço direitinho sem distorcer a foto */
+    border-radius: 8px;
+}
+
+/* Título do anime dentro do card */
+.kpis h1 {
+    font-size: 1.1rem;
+    color: white;
+    margin: 12px 0 5px 0;
+    text-align: center;
+}
+
+/* Descrição/Parágrafo dentro do card */
+.kpis p {
+    font-size: 0.85rem;
+    color: #A29FD0;
+    text-align: center;
+    margin: 0;
 }
