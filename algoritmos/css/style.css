@@ -66,11 +66,17 @@ animation: mudança normal 1s ;
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
+    max-width: 600px; /* Limita a largura para o texto não esticar demais */
+    z-index: 2;
 }
 
 .texto{
    display: flex;
     flex-direction: column;
+    max-width: 600px;
+    z-index: 2;
+    gap: 1px;
+    
 }
 
 .separado{
@@ -81,14 +87,73 @@ animation: mudança normal 1s ;
 
 .direita{
    display: flex;
-    position: relative;
+    position: absolute;
     flex-direction: row;
     font-size: 5rem;
+    margin-left: 42%;
+    margin-bottom: 250px;
     white-space: nowrap;
     align-self: center;
-     font-size: 48px;
+     font-size: 250px;
   font-weight: bold;
   color: transparent; 
   -webkit-text-fill-color: transparent; 
   -webkit-text-stroke: 1px #FF3DF2;
+  text-shadow: 0px 0px 30px #FF3DF2;
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.eu{
+   display: inline;
+   color: #2DE2FF;
+}
+.nome{
+    display: inline;
+    color: #FF3DF2;
+}
+
+.branco{
+    color: white;
+}
+
+.rosa{
+   color: #FF3DF2;
+}
+
+.azul{
+    color: #2DE2FF;
+}
+
+.roxo{
+    color: #A29FD0;
+}
+
+.visiveis a{
+    display: inline;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.dash{
+    color:#2DE2FF;
+}
+
+.sobre{
+  background: linear-gradient(90deg, white, #A29FD0, #2DE2FF, white);
+    background-size: 300% 100%; 
+    animation: cor_sobre 4s linear infinite;   
+    border-radius: 20px;
+    color: #0A0816; 
+    padding: 15px 25px;
+}
+
+@keyframes cor_sobre {
+  0% {
+        background-position: 0% 50%; 
+    }
+    100% {
+        background-position: 100% 50%; 
+    }
 }
