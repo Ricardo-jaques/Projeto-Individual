@@ -15,7 +15,7 @@ body {
     align-items: center;
 }
 
-/* Estilo geral para a logo ou imagens soltas fora dos cards */
+
 .logo img {
     width: 100%;
     height: 100%;
@@ -169,7 +169,7 @@ body {
     box-sizing: border-box;
 }
 
-/* O card de cada anime */
+
 .kpis {
     display: flex;
     flex-direction: column;
@@ -178,7 +178,7 @@ body {
     border: 1px solid #2D2858;
     border-radius: 12px;
     padding: 15px;
-    width: 220px; /* Mantém um tamanho padrão para todos os cards ficarem alinhados */
+    width: 220px; 
     box-sizing: border-box;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -189,15 +189,15 @@ body {
     box-shadow: 0px 5px 20px rgba(45, 226, 255, 0.2);
 }
 
-/* Imagem dentro do card */
+
 .kpis img {
     width: 100%;
     height: 180px;
-    object-fit: fill; /* Cobre o espaço direitinho sem distorcer a foto */
+    object-fit: fill;
     border-radius: 8px;
 }
 
-/* Título do anime dentro do card */
+
 .kpis h1 {
     font-size: 1.1rem;
     color: white;
@@ -205,7 +205,7 @@ body {
     text-align: center;
 }
 
-/* Descrição/Parágrafo dentro do card */
+
 .kpis p {
     font-size: 0.85rem;
     color: #A29FD0;
@@ -233,4 +233,180 @@ body {
     font-size: 0.95rem;
     margin: 0;
     font-weight: normal;
+}
+
+
+
+
+
+
+.botoes-cadLog {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-adicionar {
+    background-color: #BD34FE;
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.btn-adicionar:hover {
+    background-color: #a226dc;
+}
+
+.btn-painel {
+    background-color: transparent;
+    color: #2DE2FF;
+    border: 1px solid #2DE2FF;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-painel:hover {
+    box-shadow: 0px 0px 15px rgba(45, 226, 255, 0.4);
+}
+
+
+.baixo-kpis {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.kpi-card {
+    flex: 1;
+    background-color: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.kpi-titulo {
+    font-size: 0.75rem;
+    color: #A29FD0;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.kpi-card h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.meio-cadLog {
+    max-width: 100% ;
+    padding: 60px 40px ; 
+    position: relative;
+}
+
+
+.meio-cadLog .direita {
+    margin-top: 300px; 
+    margin-left: 38%;  
+    align-self: center;
+}
+
+
+
+
+
+.botoes-cadLog {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-adicionar {
+    background-color: #BD34FE;
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.btn-adicionar:hover {
+    background-color: #a226dc;
+}
+
+.btn-painel {
+    background-color: transparent;
+    color: #2DE2FF;
+    border: 1px solid #2DE2FF;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-painel:hover {
+    box-shadow: 0px 0px 15px rgba(45, 226, 255, 0.4);
+}
+
+
+.baixo-kpis {
+    display: flex;
+    gap: 20px;
+    padding: 20px 40px;
+    margin-top: 0px; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.kpi-card {
+    flex: 1;
+    background-color: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+    border-color: #2DE2FF;
+}
+
+.kpi-titulo {
+    font-size: 0.8rem;
+    color: #A29FD0;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.kpi-card h2 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.linha-baixo{
+    width: 100%;
+    height: 2px;
+    background-color: #110d25;
+    margin-top: 200px;
 }
