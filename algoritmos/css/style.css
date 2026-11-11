@@ -410,3 +410,113 @@ body {
     background-color: #110d25;
     margin-top: 200px;
 }
+
+/* ===================================================
+   ESTILOS DA PÁGINA SOBRE
+   =================================================== */
+
+.conteudo-sobre {
+    padding: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.grid-dois {
+    display: flex;
+    gap: 25px;
+    width: 100%;
+}
+
+.card-sobre {
+    flex: 1;
+    background-color: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 25px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card-sobre:hover {
+    transform: translateY(-5px);
+    border-color: #2DE2FF;
+}
+
+.card-sobre h2 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.card-sobre p {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.card-sobre-grande {
+    background-color: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 30px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.historico-grid {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+}
+
+.coluna-historia {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item-historia {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.ponto-azul {
+    width: 10px;
+    height: 10px;
+    background-color: #2DE2FF;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px #2DE2FF;
+}
+
+.ponto-rosa {
+    width: 10px;
+    height: 10px;
+    background-color: #FF3DF2;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px #FF3DF2;
+}
+
+.item-historia strong {
+    color: white;
+    font-size: 1rem;
+}
+
+.item-historia p {
+    font-size: 0.85rem;
+    margin: 3px 0 0 0;
+}
+
+/* Espaço reservado caso queira incrementar depois */
+.espaco-adicional {
+    width: 100%;
+    min-height: 20px;
+}
