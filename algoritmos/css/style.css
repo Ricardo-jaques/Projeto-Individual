@@ -520,3 +520,134 @@ body {
     width: 100%;
     min-height: 20px;
 }
+
+/* ===================================================
+   ESTILOS DA PÁGINA DE CADASTRO / LOGIN (ENTRAR)
+   =================================================== */
+
+.container-auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 60px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Card esquerdo com o kanji */
+.card-auth-esquerda {
+    background-color: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 16px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.kanji-icone {
+    font-size: 80px;
+    color: #2DE2FF;
+    text-shadow: 0px 0px 20px rgba(45, 226, 255, 0.4);
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Card direito com o formulário */
+.card-auth-direita {
+    background-color: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 16px;
+    padding: 30px;
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.abas-auth {
+    display: flex;
+    background-color: #0A0816;
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid #2D2858;
+}
+
+.aba-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #A29FD0;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.aba-ativa {
+    background-color: #141230;
+    color: #2DE2FF;
+    border: 1px solid #2DE2FF;
+}
+
+.form-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.label-auth {
+    font-size: 0.75rem;
+    color: #A29FD0;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.input-auth {
+    background-color: #0A0816;
+    border: 1px solid #2D2858;
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: white;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-auth:focus {
+    border-color: #2DE2FF;
+}
+
+.btn-submit {
+    background: linear-gradient(90deg, #BD34FE, #FF3DF2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0px 4px 15px rgba(255, 61, 242, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+}
+
+.prototipo-aviso {
+    font-size: 0.75rem;
+    color: #A29FD0;
+    text-align: center;
+    margin: 5px 0 0 0;
+}
