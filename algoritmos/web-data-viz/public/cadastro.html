@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricardo Jaques - Cadastro / Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        
+   
+        <div class="cima">
+            <div class="logo">
+                <img src="assets/logo.svg" alt="Logo">
+            </div>
+            <div class="seçoes">
+               <a href="index.html" class="quadrados">HOME</a>
+               <a href="sobre.html" class="quadrados">SOBRE</a>
+               <a href="entrar.html" class="quadrados ativo">CADASTRO/LOGIN</a>
+
+            </div>
+        </div>
+
+        <div class="linha"></div>
+
+        <div class="container-auth">
+            
+          
+            <div class="card-auth-esquerda">
+                <div class="kanji-icone">旅</div>
+                <h1 class="rosa" style="font-size: 1.5rem; text-align: center; margin: 0;">Encontre quem gosta do mesmo que você</h1>
+                <p class="roxo" style="text-align: center; font-size: 0.9rem; margin: 0;">Cadastre os animes que você assiste e descubra quem mais gosta deles.</p>
+            </div>
+
+  
+            <div class="card-auth-direita">
+                <div class="abas-auth">
+                    <a href="login.html" class="aba-btn" style="text-decoration: none; text-align: center;">Entrar</a>
+                    <a href="cadastro.html" class="aba-btn aba-ativa" style="text-decoration: none; text-align: center;">Cadastrar</a>
+                </div>
+
+               
+               <div class="form-auth">
+    <label class="label-auth">NOME</label>
+    <input type="text" placeholder="Seu nome" class="input-auth" id="inp_Nome">
+
+    <label class="label-auth">E-MAIL</label>
+    <input type="email" placeholder="voce@email.com" class="input-auth" id="inp_Email">
+    <span id="erroEmail" class="mensagem-erro"></span>
+
+    <label class="label-auth">SENHA</label>
+    <input type="password" placeholder="********" class="input-auth" id="inp_Senha" oninput="escrever()">
+    <span id="erroSenha"  class="mensagem-erro"></span>
+
+    <button type="button" onclick="cadastrar()" class="btn-submit">Cadastrar</button>
+    <span id="erroTotal" class="mensagem-erro-total"></span>
+</div>
+
+                
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
+
+<script>
+  function escrever(){
+    let senha = inp_Senha.value;
+    let mensagem =``
+    if(senha.length>=10 && (senha!=senha.toUpperCase() && senha!=senha.toLowerCase)){
+      mensagem=`<span style="color: green;">Senha Forte</span>`
+    }
+   
+    else if(senha!= senha.toUpperCase() && senha!= senha.toLowerCase()){
+      mensagem =`<span style="color: yellow;">Senha media </span>`
+    }
+     else if(senha.length<10){
+      mensagem =`<span style="color: red;">Senha fraca </span>`
+    }
+
+    erroSenha.innerHTML=mensagem
+  }
+  function cadastrar() {
+    let nomeVar = inp_Nome.value;
+    let emailVar = inp_Email.value;
+    let senhaVar = inp_Senha.value;
+    if (
+      nomeVar == "" ||
+      emailVar == "" ||
+      senhaVar == "" 
+    ) {
+      erroTotal.innerHTML=
+        `(Mensagem de erro para todos os campos em branco)`;
+    } else if(!emailVar.includes('@')){
+      erroEmail.innerHTML=
+        `insira @ no email`;
+    }
+    else{
+
+
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+       
+        nomeServer: nomeVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+
+        erroTotal.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "homeLog.html";
+          }, "2000");
+        }
+      })
+   
+    }
+  }
+</script>
