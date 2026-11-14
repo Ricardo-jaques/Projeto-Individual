@@ -651,3 +651,201 @@ body {
     text-align: center;
     margin: 5px 0 0 0;
 }
+
+/* ===================================================
+   AJUSTES DA DASHBOARD (COMPACTO E EM COLUNAS)
+   =================================================== */
+
+.dashboard-header {
+    padding: 30px 20px 10px 20px;
+}
+
+.dashboard-kpis-topo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0 20px 20px 20px;
+    justify-content: space-between;
+}
+
+.kpi-topo-card {
+    background: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 20px;
+    flex: 1;
+    min-width: 200px;
+    box-sizing: border-box;
+}
+
+.kpi-topo-label {
+    font-size: 0.8rem;
+    color: #A29FD0;
+    font-weight: bold;
+}
+
+.kpi-topo-card h2 {
+    margin-top: 5px;
+    font-size: 1.5rem;
+}
+
+.dashboard-grid-inferior {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0 20px 40px 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.dashboard-coluna {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-gerenciar-animes, .card-afinidade, .card-calculadora, .card-chart {
+    background: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 25px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.card-gerenciar-animes h2, .card-afinidade h2, .card-calculadora h2, .card-chart h2 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.form-grupo-anime {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-linha-dupla {
+    display: flex;
+    gap: 15px;
+}
+
+.input-container-flex {
+    flex: 1;
+}
+
+.lista-animes-container {
+    margin-top: 20px;
+}
+
+.lista-animes-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.anime-item-card {
+    background: #0A0816;
+    border: 1px solid #2D2858;
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-atualizar-anime {
+    background: transparent;
+    border: 1px solid #2DE2FF;
+    color: #2DE2FF;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 11px;
+    transition: background 0.3s ease;
+}
+
+.btn-atualizar-anime:hover {
+    background: rgba(45, 226, 255, 0.1);
+}
+
+.afinidade-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.afinidade-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.afinidade-info {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.barra-fundo {
+    width: 100%;
+    background: #0A0816;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.barra-progresso {
+    height: 100%;
+    background: linear-gradient(90deg, #2DE2FF, #FF3DF2);
+}
+
+.afinidade-legenda {
+    color: #A29FD0;
+    font-size: 0.75rem;
+    margin-top: 15px;
+}
+
+.calculadora-resultados {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.calc-box {
+    flex: 1;
+    background: #0A0816;
+    border: 1px solid #2D2858;
+    border-radius: 8px;
+    padding: 12px;
+    min-width: 90px;
+    box-sizing: border-box;
+}
+
+.calc-titulo {
+    color: #FF3DF2;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    display: block;
+}
+
+.calc-valor {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.chart-canvas-mock {
+    background: #0A0816;
+    border: 1px solid #2D2858;
+    border-radius: 8px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #A29FD0;
+}

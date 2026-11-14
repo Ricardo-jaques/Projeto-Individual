@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeHub - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header / Navegação -->
+        <div class="cima">
+            <div class="logo">
+                <img src="imagens/logo.svg" alt="Logo AnimeHub">
+            </div>
+            <div class="seçoes">
+               <a href="homeLog.html" class="quadrados">HOME</a>
+               <a href="sobre.html" class="quadrados">SOBRE</a>
+               <a href="entrar" class="quadrados">SAIR</a>
+               <a href="dashboard.html" class="quadrados" style="border: 1px solid #FF3DF2; box-shadow: 0px 0px 10px #FF3DF2;">DASHBOARD</a>
+            </div>
+        </div>
+
+        <div class="linha"></div>
+
+        <!-- Título da Página -->
+        <div class="dashboard-header">
+            <h1 class="branco">Painel do Visitante</h1>
+        </div>
+
+        <!-- Cards de Estatísticas do Topo (Indicadores) -->
+        <div class="dashboard-kpis-topo">
+            <div class="kpi-topo-card">
+                <span class="kpi-topo-label">ANIME MAIS ASSISTIDO</span>
+                <h2 class="azul">Naruto</h2>
+            </div>
+            <div class="kpi-topo-card">
+                <span class="kpi-topo-label">PESSOAS CADASTRADAS</span>
+                <h2 class="azul">6</h2>
+            </div>
+            <div class="kpi-topo-card">
+                <span class="kpi-topo-label">ANIMES NA LISTA</span>
+                <h2 class="azul">6</h2>
+            </div>
+            <div class="kpi-topo-card">
+                <span class="kpi-topo-label">SEU NÍVEL</span>
+                <h2 class="rosa">Novato</h2>
+            </div>
+        </div>
+          <div class="card-chart">
+                    <h2 class="azul">Gráficos de Estatísticas (Chart.js)</h2>
+                    <p class="roxo" style="font-size: 0.85rem; margin-bottom: 15px;">Espaço reservado para você plugar seus gráficos usando Chart.js.</p>
+                    <div class="chart-canvas-mock">
+                        <span>[Canvas do Chart.js entra aqui]</span>
+                    </div>
+                </div>
+
+        <!-- Grid Principal de Duas Colunas (Padrão da Dash) -->
+        <div class="dashboard-grid-inferior">
+            
+            <!-- Coluna Esquerda: Gerenciar Meus Animes & Progresso (%) -->
+            <div class="dashboard-coluna">
+                <div class="card-gerenciar-animes">
+                    <h2 class="azul">Gerenciar Meus Animes & Progresso (%)</h2>
+                    
+                    <div class="form-grupo-anime">
+                        <div>
+                            <label class="label-auth">Nome do Anime</label>
+                            <input type="text" id="inputNomeAnime" placeholder="Ex: Baki" class="input-auth">
+                        </div>
+                        <div class="form-linha-dupla">
+                            <div class="input-container-flex">
+                                <label class="label-auth">Assistidos</label>
+                                <input type="number" id="inputAssistidos" placeholder="Ex: 24" class="input-auth">
+                            </div>
+                            <div class="input-container-flex">
+                                <label class="label-auth">Faltam</label>
+                                <input type="number" id="inputFaltam" placeholder="Ex: 0" class="input-auth">
+                            </div>
+                        </div>
+                        <button id="btnSalvarAnime" class="btn-submit" style="width: 100%; margin-top: 5px;">Salvar no Vetor 🚀</button>
+                    </div>
+
+                    <div class="lista-animes-container">
+                        <h3 class="branco" style="font-size: 0.95rem;">Animes Registrados</h3>
+                        <div id="listaAnimesProgresso" class="lista-animes-wrapper">
+                            <div class="anime-item-card">
+                                <div>
+                                    <strong class="branco" style="font-size: 1rem;">Baki</strong>
+                                    <p class="roxo" style="margin: 3px 0 0 0; font-size: 0.8rem;">Assistidos: 24 | Faltam: 0 (100% Concluído)</p>
+                                </div>
+                                <button class="btn-atualizar-anime">Atualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            <!-- Coluna Direita: Calculadora de Tempo & Chart.js -->
+            <div class="dashboard-coluna">
+                
+                <!-- Calculadora de Tempo -->
+                <div class="card-calculadora">
+                    <h2 class="azul">Calculadora de tempo</h2>
+                    
+                    <div class="form-grupo-anime">
+                        <div>
+                            <label class="label-auth">Episódios Assistidos</label>
+                            <input type="number" id="calcEpisodios" placeholder="220" class="input-auth">
+                        </div>
+                        <div>
+                            <label class="label-auth">Minutos por Episódio</label>
+                            <input type="number" id="calcMinutos" placeholder="23" class="input-auth">
+                        </div>
+                    </div>
+
+                    <div class="calculadora-resultados">
+                        <div class="calc-box">
+                            <span class="calc-titulo">Minutos totais</span>
+                            <span id="resMinutos" class="calc-valor"></span>
+                        </div>
+                        <div class="calc-box">
+                            <span class="calc-titulo">Horas</span>
+                            <span id="resHoras" class="calc-valor"></span>
+                        </div>
+                        <div class="calc-box">
+                            <span class="calc-titulo">Dias</span>
+                            <span id="resDias" class="calc-valor"></span>
+                        </div>
+                    </div>
+                </div>
+
+                
+              
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
