@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnimeHub - Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
-        <!-- Header / Navegação -->
+   
         <div class="cima">
             <div class="logo">
-                <img src="imagens/logo.svg" alt="Logo AnimeHub">
+                <img src="assets/logo.svg" alt="Logo AnimeHub">
             </div>
             <div class="seçoes">
                <a href="homeLog.html" class="quadrados">HOME</a>
@@ -23,12 +24,12 @@
 
         <div class="linha"></div>
 
-        <!-- Título da Página -->
+      
         <div class="dashboard-header">
             <h1 class="branco">Painel do Visitante</h1>
         </div>
 
-        <!-- Cards de Estatísticas do Topo (Indicadores) -->
+      
         <div class="dashboard-kpis-topo">
             <div class="kpi-topo-card">
                 <span class="kpi-topo-label">ANIME MAIS ASSISTIDO</span>
@@ -47,18 +48,19 @@
                 <h2 class="rosa">Novato</h2>
             </div>
         </div>
-          <div class="card-chart">
-                    <h2 class="azul">Gráficos de Estatísticas (Chart.js)</h2>
-                    <p class="roxo" style="font-size: 0.85rem; margin-bottom: 15px;">Espaço reservado para você plugar seus gráficos usando Chart.js.</p>
-                    <div class="chart-canvas-mock">
-                        <span>[Canvas do Chart.js entra aqui]</span>
-                    </div>
+    
+        <div style="padding: 0 20px 20px 20px; width: 100%; box-sizing: border-box;">
+            <div class="card-chart">
+                <h2 class="azul">Pessoas por anime</h2>
+                <p class="roxo" style="font-size: 0.85rem; margin-bottom: 15px;">Visibilidade geral dos animes cadastrados na plataforma.</p>
+                <div class="chart-container-grande">
+                    <canvas id="myChart"></canvas>
                 </div>
-
-        <!-- Grid Principal de Duas Colunas (Padrão da Dash) -->
+            </div>
+        </div>
         <div class="dashboard-grid-inferior">
             
-            <!-- Coluna Esquerda: Gerenciar Meus Animes & Progresso (%) -->
+          
             <div class="dashboard-coluna">
                 <div class="card-gerenciar-animes">
                     <h2 class="azul">Gerenciar Meus Animes & Progresso (%)</h2>
@@ -66,16 +68,16 @@
                     <div class="form-grupo-anime">
                         <div>
                             <label class="label-auth">Nome do Anime</label>
-                            <input type="text" id="inputNomeAnime" placeholder="Ex: Baki" class="input-auth">
+                            <input type="text" id="inputNomeAnime" placeholder="Ex: Baki" class="input-auth" style="width: 100%; box-sizing: border-box;">
                         </div>
                         <div class="form-linha-dupla">
                             <div class="input-container-flex">
                                 <label class="label-auth">Assistidos</label>
-                                <input type="number" id="inputAssistidos" placeholder="Ex: 24" class="input-auth">
+                                <input type="number" id="inputAssistidos" placeholder="Ex: 24" class="input-auth" style="width: 100%; box-sizing: border-box;">
                             </div>
                             <div class="input-container-flex">
                                 <label class="label-auth">Faltam</label>
-                                <input type="number" id="inputFaltam" placeholder="Ex: 0" class="input-auth">
+                                <input type="number" id="inputFaltam" placeholder="Ex: 0" class="input-auth" style="width: 100%; box-sizing: border-box;">
                             </div>
                         </div>
                         <button id="btnSalvarAnime" class="btn-submit" style="width: 100%; margin-top: 5px;">Salvar no Vetor 🚀</button>
@@ -94,48 +96,108 @@
                         </div>
                     </div>
                 </div>
+            </div> 
 
-
-            <!-- Coluna Direita: Calculadora de Tempo & Chart.js -->
+       
             <div class="dashboard-coluna">
-                
-                <!-- Calculadora de Tempo -->
                 <div class="card-calculadora">
                     <h2 class="azul">Calculadora de tempo</h2>
                     
                     <div class="form-grupo-anime">
                         <div>
                             <label class="label-auth">Episódios Assistidos</label>
-                            <input type="number" id="calcEpisodios" placeholder="220" class="input-auth">
+                            <input type="number" id="inp_calcEpisodios" placeholder="220" class="input-auth"  style="width: 100%; box-sizing: border-box;">
                         </div>
                         <div>
-                            <label class="label-auth">Minutos por Episódio</label>
-                            <input type="number" id="calcMinutos" placeholder="23" class="input-auth">
+                            <label class="label-auth">Media Minutos por Episódio</label>
+                            <input type="number" id="inp_calcMinutos" placeholder="23" class="input-auth" style="width: 100%; box-sizing: border-box;">
                         </div>
+                        <button onclick="calcular()">vej por quanto tempo voce assistiu seu anime</button>
                     </div>
 
                     <div class="calculadora-resultados">
                         <div class="calc-box">
                             <span class="calc-titulo">Minutos totais</span>
-                            <span id="resMinutos" class="calc-valor"></span>
+                            <span  class="calc-valor" id="Minutos"></span>
                         </div>
                         <div class="calc-box">
                             <span class="calc-titulo">Horas</span>
-                            <span id="resHoras" class="calc-valor"></span>
+                            <span  class="calc-valor" id="Horast"></span>
                         </div>
                         <div class="calc-box">
                             <span class="calc-titulo">Dias</span>
-                            <span id="resDias" class="calc-valor"></span>
+                            <span  class="calc-valor" id="Dias"></span>
                         </div>
                     </div>
                 </div>
-
-                
-              
-
             </div>
 
         </div>
-    </div>
 </body>
 </html>
+
+<script>
+
+    function calcular(){
+        let calcularEpisodios = Number(inp_calcEpisodios.value);
+        let CalcularMinutos = Number(inp_calcMinutos.value);
+
+        let minustosTotais = calcularEpisodios * CalcularMinutos;
+        let Horas = minustosTotais/60;
+        let dias = Horas/24;
+
+        Minutos.innerHTML=minustosTotais.toFixed(2)
+        Horast.innerHTML=Horas.toFixed(2)
+        Dias.innerHTML=dias.toFixed(2)
+
+    }
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Naruto', 'Jujutsu Kaisen', 'Hunter x Hunter', 'Bleach', 'Dragon Ball', 'Black Clover'],
+            datasets: [{
+                data: [4, 2, 3, 3, 2, 2],
+                borderWidth: 0,
+                borderRadius: 6,
+                backgroundColor: [
+                    '#FF8A00', 
+                    '#9D4EDD', 
+                    '#00F5D4', 
+                    '#FF007F', 
+                    '#FFD60A',
+                    '#7209B7'  
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false 
+                },
+                tooltip: {
+                    backgroundColor: '#141230',
+                    titleColor: '#2DE2FF',
+                    bodyColor: '#FFFFFF',
+                    borderColor: '#2D2858',
+                    borderWidth: 1,
+                    padding: 10
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#A29FD0', font: { family: 'Meiryo', size: 12 } }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#2D2858', borderDash: [4, 4] },
+                    ticks: { color: '#A29FD0', stepSize: 1 }
+                }
+            }
+        }
+    });
+</script>
