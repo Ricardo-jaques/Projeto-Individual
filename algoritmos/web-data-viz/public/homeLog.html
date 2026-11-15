@@ -11,7 +11,7 @@
         
         <div class="cima">
             <div class="logo">
-                <img src="imagens/logo.svg" alt="Logo">
+                <img src="assets/logo.svg" alt="Logo">
             </div>
             <div class="seçoes">
                <a href="homeLog.html" class="quadrados">HOME</a>
@@ -27,7 +27,7 @@
         <div class="meio-cadLog">
             <div class="texto">
                 <h1 class="branco">BEM-VINDO DE VOLTA,</h1>
-                <h1 class="rosa">RICARDO!</h1>
+                <h1 class="rosa" id="nome"></h1>
                 <p class="roxo">Continue sua jornada: adicione os animes que você assistiu e acompanhe seus dados.</p>
                 
                 <div class="botoes-cadLog">
@@ -64,3 +64,7 @@
     </div>
 </body>
 </html>
+
+<script>
+    nome.innerHTML=sessionStorage.NOME_USUARIO;
+</script>

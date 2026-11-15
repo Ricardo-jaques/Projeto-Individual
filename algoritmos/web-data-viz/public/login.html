@@ -12,7 +12,7 @@
         <!-- Topo da página -->
         <div class="cima">
             <div class="logo">
-                <img src="imagens/logo.svg" alt="Logo">
+                <img src="assets/logo.svg" alt="Logo">
             </div>
             <div class="seçoes">
                <a href="index.html" class="quadrados">HOME</a>
@@ -43,15 +43,18 @@
                 </div>
 
                 
-                <form class="form-auth">
+                <div class="form-auth">
                     <label class="label-auth">E-MAIL</label>
-                    <input type="email" placeholder="voce@email.com" class="input-auth" required>
+                    <input type="email" placeholder="voce@email.com" class="input-auth" id="inp_Email">
+                    <span id="EmailErro" class="mensagem-erro"></span>
 
                     <label class="label-auth">SENHA</label>
-                    <input type="password" placeholder="********" class="input-auth" required>
+                    <input type="password" placeholder="********" class="input-auth" id="inp_Senha">
+                    <span id="senhaErro" class="mensagem-erro"></span>
 
-                    <button type="submit" class="btn-submit">Entrar</button>
-                </form>
+                    <button onclick="entrar()" class="btn-submit">Entrar</button>
+                    <span id="erroTotal" class="mensagem-erro-total"></span>
+                </div>
 
             
             </div>
@@ -61,3 +64,64 @@
     </div>
 </body>
 </html>
+
+<script>
+     function entrar() {
+
+        var emailVar = inp_Email.value;
+        var senhaVar = inp_Senha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            erroTotal.innerHTML = "Insira Algum Valor Nos Campos";
+        }else{
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "homeLog.html";
+                    }, 1000);
+
+                });
+
+            } else {
+
+                erroTotal.innerHTML=`Houve um erro ao tentar realizar o login!`;
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+}
+
+</script>
