@@ -68,20 +68,21 @@
                     <div class="form-grupo-anime">
                         <div>
                             <label class="label-auth">Nome do Anime</label>
-                            <input type="text" id="inputNomeAnime" placeholder="Ex: Baki" class="input-auth" style="width: 100%; box-sizing: border-box;">
+                            <input type="text" id="inp_nome_anime" placeholder="Ex: Baki" class="input-auth" style="width: 100%; box-sizing: border-box;">
                         </div>
                         <div class="form-linha-dupla">
                             <div class="input-container-flex">
                                 <label class="label-auth">Assistidos</label>
-                                <input type="number" id="inputAssistidos" placeholder="Ex: 24" class="input-auth" style="width: 100%; box-sizing: border-box;">
+                                <input type="number" id="inp_assistidos" placeholder="Ex: 24" class="input-auth" style="width: 100%; box-sizing: border-box;">
                             </div>
                             <div class="input-container-flex">
                                 <label class="label-auth">Faltam</label>
-                                <input type="number" id="inputFaltam" placeholder="Ex: 0" class="input-auth" style="width: 100%; box-sizing: border-box;">
+                                <input type="number" id="inp_faltam" placeholder="Ex: 0" class="input-auth" style="width: 100%; box-sizing: border-box;">
                             </div>
                         </div>
-                        <button id="btnSalvarAnime" class="btn-submit" style="width: 100%; margin-top: 5px;">Salvar no Vetor 🚀</button>
+                        <button onclick="cadastrarAnime()" class="btn-submit" style="width: 100%; margin-top: 5px;">Salvar no Vetor 🚀</button>
                     </div>
+                    <span id="erroTotal"></span>
 
                     <div class="lista-animes-container">
                         <h3 class="branco" style="font-size: 0.95rem;">Animes Registrados</h3>
@@ -91,7 +92,7 @@
                                     <strong class="branco" style="font-size: 1rem;">Baki</strong>
                                     <p class="roxo" style="margin: 3px 0 0 0; font-size: 0.8rem;">Assistidos: 24 | Faltam: 0 (100% Concluído)</p>
                                 </div>
-                                <button class="btn-atualizar-anime">Atualizar</button>
+                                <button class="btn-atualizar-anime" >Atualizar</button>
                             </div>
                         </div>
                     </div>
@@ -113,6 +114,8 @@
                             <input type="number" id="inp_calcMinutos" placeholder="23" class="input-auth" style="width: 100%; box-sizing: border-box;">
                         </div>
                         <button onclick="calcular()">vej por quanto tempo voce assistiu seu anime</button>
+                        <br>
+                        <button onclick="SalvarT()">Salvar tempo no meu nível</button>
                     </div>
 
                     <div class="calculadora-resultados">
@@ -200,4 +203,52 @@
             }
         }
     });
+
+    function cadastrarAnime(){
+          let NomeAnime = inp_nome_anime.value;
+    let assistidos = Number(inp_assistidos.value);
+    let faltam = Number(inp_faltam.value);
+    let total = assistidos + faltam
+    let porcentagem = (assistidos/total)*100
+    if (
+      NomeAnime == "" ||
+      assistidos == "" ||
+      faltam == "" 
+    ) {
+      erroTotal.innerHTML=
+        `(Mensagem de erro para todos os campos em branco)`;
+    } 
+    else{
+
+
+    fetch("/usuarios/cadastrarAnime", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+       
+        nomeAnimeVar: NomeAnime,
+        assistidosVar: assistidos,
+        faltamVar: faltam,
+        porcentagemVar : porcentagem,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+
+        erroTotal.innerHTML =
+            "Progresso do anime cadastrado com sucesso olhe seu Progresso na dahboard";
+
+        }
+      })
+   
+    }
+       
+       
+          
+         
+    }
 </script>

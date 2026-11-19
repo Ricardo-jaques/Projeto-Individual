@@ -87,3 +87,48 @@ module.exports = {
     autenticar,
     cadastrar
 }
+
+function cadastrarAnime(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var nomeAnime = req.body.nomeAnimeVar;
+    var assistidos = req.body.assistidosVar;
+    var porcentagem = req.body.porcentagemVar;
+    var faltam = req.body.faltamVar;
+
+    // Faça as validações dos valores
+    if (nomeAnime == undefined) {
+        res.status(400).send("Seu nome De anime está undefined!");
+    } else if (assistidos == undefined) {
+        res.status(400).send("Seu assistidos está undefined!");
+    } else if (porcentagem == undefined) {
+        res.status(400).send("Sua porcentagem está undefined!");
+    } 
+    else if (faltam == undefined) {
+        res.status(400).send("Seu faltam está undefined!");
+    } 
+     else {
+
+        
+        usuarioModel.cadastrarAnime(nomeAnime, assistidos, porcentagem,faltam)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+module.exports = {
+    autenticar,
+    cadastrar,
+    cadastrarAnime
+}

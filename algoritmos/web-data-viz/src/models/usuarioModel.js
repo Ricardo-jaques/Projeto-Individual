@@ -23,5 +23,17 @@ function cadastrar(nome, email, senha) {
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    cadastrarAnime
 };
+
+function cadastrarAnime(nomeAnime,assistidos,porcentagem,faltam){
+console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAnime():", nomeAnime, assistidos, porcentagem,faltam);
+    
+
+    var instrucaoSql = `
+        INSERT INTO anime (nome, episodios_assistidos, faltam,porcentagem) VALUES ('${nomeAnime}', '${assistidos}', '${faltam}','${porcentagem}');
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
