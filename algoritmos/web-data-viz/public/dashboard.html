@@ -80,7 +80,7 @@
                                 <input type="number" id="inp_faltam" placeholder="Ex: 0" class="input-auth" style="width: 100%; box-sizing: border-box;">
                             </div>
                         </div>
-                        <button onclick="cadastrarAnime()" class="btn-submit" style="width: 100%; margin-top: 5px;">Salvar no Vetor 🚀</button>
+                        <button onclick="cadastrarAnime(),Puxar()" class="btn-submit" style="width: 100%; margin-top: 5px;">Salvar no Vetor 🚀</button>
                     </div>
                     <span id="erroTotal"></span>
 
@@ -250,5 +250,62 @@
        
           
          
+    }
+    function puxar(){
+        
+        var emailVar = inp_Email.value;
+        var senhaVar = inp_Senha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            erroTotal.innerHTML = "Insira Algum Valor Nos Campos";
+        }else{
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "homeLog.html";
+                    }, 1000);
+
+                });
+
+            } else {
+
+                erroTotal.innerHTML=`Houve um erro ao tentar realizar o login!`;
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
     }
 </script>
