@@ -28,3 +28,6 @@ create table anime (
     fk_usuario int,
     constraint fkUsuarioAnime foreign key (fk_usuario) references usuario(id)
 );
+
+select * from usuario;
+select * from anime;
