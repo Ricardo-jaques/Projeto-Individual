@@ -887,3 +887,141 @@ body {
     width: 100% !important;
     height: 100% !important;
 }
+
+/* --- LINHA LADO A LADO --- */
+.cards-lado-a-lado {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.card-venn,
+.card-adicionar-rapido {
+    flex: 1;
+    min-width: 300px;
+    background: #141230;
+    border: 1px solid #2D2858;
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card-venn h2,
+.card-adicionar-rapido h2 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    font-size: 1.15rem;
+}
+
+.input-full {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 6px;
+}
+
+/* --- VENN COMPACTO --- */
+.venn-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 175px;
+    margin-top: 14px;
+}
+
+.venn-circulo {
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.venn-esquerda {
+    background: rgba(157, 43, 191, 0.28);
+    border: 2px solid #FF3DF2;
+    box-shadow: 0 0 14px rgba(255, 61, 242, 0.2);
+    align-items: flex-start;
+    padding-left: 24px;
+    margin-right: -24px;
+    z-index: 1;
+}
+
+.venn-direita {
+    background: rgba(25, 118, 158, 0.28);
+    border: 2px solid #2DE2FF;
+    box-shadow: 0 0 14px rgba(45, 226, 255, 0.2);
+    align-items: flex-end;
+    padding-right: 24px;
+    margin-left: -24px;
+    z-index: 1;
+}
+
+.venn-centro {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    text-align: center;
+    pointer-events: none;
+}
+
+.venn-numero {
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    font-weight: bold;
+    line-height: 1.15;
+}
+
+.venn-legenda {
+    color: #E4E2FF;
+    font-size: 0.78rem;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+/* --- ADICIONAR RÁPIDO --- */
+.adicionar-rapido-linha {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.input-rapido {
+    flex: 1;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.btn-adicionar-neon {
+    background: linear-gradient(90deg, #FF3DF2, #9D4EDD);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 0 18px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 0 16px rgba(255, 61, 242, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-adicionar-neon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 22px rgba(255, 61, 242, 0.55);
+}
+
+.texto-vazio-rapido {
+    color: #A29FD0;
+    font-size: 0.82rem;
+    margin: 12px 0 0 0;
+}

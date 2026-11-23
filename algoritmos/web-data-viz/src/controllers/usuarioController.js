@@ -54,6 +54,7 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
+    var nivel = req.body.nivelServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -65,7 +66,7 @@ function cadastrar(req, res) {
     }  else {
 
         
-        usuarioModel.cadastrar(nome, email, senha)
+        usuarioModel.cadastrar(nome, email, senha,nivel)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -83,10 +84,6 @@ function cadastrar(req, res) {
     }
 }
 
-module.exports = {
-    autenticar,
-    cadastrar
-}
 
 function cadastrarAnime(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html

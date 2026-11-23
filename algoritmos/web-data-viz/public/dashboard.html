@@ -59,7 +59,51 @@
             </div>
         </div>
         <div class="dashboard-grid-inferior">
-            
+            <div class="cards-lado-a-lado">
+   
+    <div class="card-venn">
+        <h2 class="azul">Quem assiste o mesmo que eu?</h2>
+
+        <div class="form-linha-dupla">
+            <div class="input-container-flex">
+                <label class="label-auth" for="inp_anime_a">ANIME A</label>
+                <input type="text" id="inp_anime_a" placeholder="Naruto" class="input-auth input-full">
+            </div>
+            <div class="input-container-flex">
+                <label class="label-auth" for="inp_anime_b">ANIME B</label>
+                <input type="text" id="inp_anime_b" placeholder="Bleach" class="input-auth input-full">
+            </div>
+        </div>
+
+        <div class="venn-area">
+            <div class="venn-circulo venn-esquerda">
+                <span class="venn-numero" id="num_so_a">2</span>
+                <span class="venn-legenda" id="txt_so_a">só Naruto</span>
+            </div>
+
+            <div class="venn-centro">
+                <span class="venn-numero" id="num_ambos">2</span>
+                <span class="venn-legenda">ambos</span>
+            </div>
+
+            <div class="venn-circulo venn-direita">
+                <span class="venn-numero" id="num_so_b">1</span>
+                <span class="venn-legenda" id="txt_so_b">só Bleach</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-adicionar-rapido">
+        <h2 class="azul">Adicionar o que eu assisto</h2>
+
+        <div class="adicionar-rapido-linha">
+            <input type="text" id="inp_adicionar_rapido" placeholder="Nome do anime" class="input-auth input-rapido">
+            <button type="button" id="btn_adicionar_rapido" class="btn-adicionar-neon">+ Adicionar</button>
+        </div>
+
+        <p class="texto-vazio-rapido" id="msg_lista_rapida">Você ainda não adicionou nenhum anime.</p>
+    </div>
+</div>
           
             <div class="dashboard-coluna">
                 <div class="card-gerenciar-animes">

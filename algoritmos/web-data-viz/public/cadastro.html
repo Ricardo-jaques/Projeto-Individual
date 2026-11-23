@@ -87,6 +87,7 @@
     let nomeVar = inp_Nome.value;
     let emailVar = inp_Email.value;
     let senhaVar = inp_Senha.value;
+    let fkNivel = 1;
     if (
       nomeVar == "" ||
       emailVar == "" ||
@@ -111,6 +112,7 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
+        nivelServer: fkNivel,
       }),
     })
       .then(function (resposta) {
