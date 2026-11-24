@@ -21,11 +21,7 @@ function cadastrar(nome, email, senha,nivel) {
     return database.executar(instrucaoSql);
 }
 
-module.exports = {
-    autenticar,
-    cadastrar,
-    cadastrarAnime
-};
+
 
 function cadastrarAnime(nomeAnime,assistidos,porcentagem,faltam){
 console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAnime():", nomeAnime, assistidos, porcentagem,faltam);
@@ -37,3 +33,37 @@ console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: co
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
+function adicionar(nomeAnimeadd){
+console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function adicionar():", nomeAnimeadd);
+    
+
+    var instrucaoSql = `
+        INSERT INTO anime (titulo) VALUES ('${nomeAnimeadd}');
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function contarAnimes() {
+    console.log("ACESSEI O USUARIO MODEL \n \n function contarAnimes()");
+
+    var instrucaoSql = `
+        SELECT
+            titulo,
+            COUNT(*) AS quantidade
+        FROM anime
+        GROUP BY titulo
+        ORDER BY quantidade DESC, titulo ASC;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+module.exports = {
+    autenticar,
+    cadastrar,
+    cadastrarAnime,
+    adicionar,
+    contarAnimes
+};

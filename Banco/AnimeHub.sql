@@ -35,11 +35,3 @@ create table usuario_anime (
 );
 
 
-SELECT 
-    a.id_anime,
-    a.titulo,
-    COUNT(ua.id_usuario) AS total_pessoas
-FROM anime a
-LEFT JOIN usuario_anime ua ON a.id_anime = ua.id_anime
-GROUP BY a.id_anime, a.titulo
-ORDER BY total_pessoas DESC;

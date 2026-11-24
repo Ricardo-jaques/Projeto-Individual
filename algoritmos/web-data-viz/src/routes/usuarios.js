@@ -15,5 +15,11 @@ router.post("/cadastrarAnime", function (req, res) {
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
+router.post("/adicionar", function (req, res) {
+    usuarioController.adicionar(req, res);
+});
+router.get("/contarAnimes", function (req, res) {
+    usuarioController.contarAnimes(req, res);
+});
 
 module.exports = router;

@@ -94,11 +94,11 @@
     </div>
 
     <div class="card-adicionar-rapido">
-        <h2 class="azul">Adicionar o que eu assisto</h2>
+        <h2 class="azul">adicionar o que eu assisto para outras pessoas verem</h2>
 
         <div class="adicionar-rapido-linha">
-            <input type="text" id="inp_adicionar_rapido" placeholder="Nome do anime" class="input-auth input-rapido">
-            <button type="button" id="btn_adicionar_rapido" class="btn-adicionar-neon">+ Adicionar</button>
+            <input type="text" id="inp_adicionar" placeholder="Nome do anime" class="input-auth input-rapido">
+            <button onclick="adicionar()" class="btn-adicionar-neon">+ Adicionar</button>
         </div>
 
         <p class="texto-vazio-rapido" id="msg_lista_rapida">Você ainda não adicionou nenhum anime.</p>
@@ -124,7 +124,7 @@
                                 <input type="number" id="inp_faltam" placeholder="Ex: 0" class="input-auth" style="width: 100%; box-sizing: border-box;">
                             </div>
                         </div>
-                        <button onclick="cadastrarAnime(),Puxar()" class="btn-submit" style="width: 100%; margin-top: 5px;">Salvar no Vetor 🚀</button>
+                        <button onclick="cadastrarAnime()" class="btn-submit" style="width: 100%; margin-top: 5px;">salvar o quanto voce assistiu o anime</button>
                     </div>
                     <span id="erroTotal"></span>
 
@@ -184,7 +184,7 @@
 </html>
 
 <script>
-
+    let animes = []
     function calcular(){
         let calcularEpisodios = Number(inp_calcEpisodios.value);
         let CalcularMinutos = Number(inp_calcMinutos.value);
@@ -200,21 +200,21 @@
     }
     const ctx = document.getElementById('myChart');
 
-    new Chart(ctx, {
+   let graficoAnimes = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Naruto', 'Jujutsu Kaisen', 'Hunter x Hunter', 'Bleach', 'Dragon Ball', 'Black Clover'],
+            labels: [],
             datasets: [{
-                data: [4, 2, 3, 3, 2, 2],
+                data: [],
                 borderWidth: 0,
                 borderRadius: 6,
                 backgroundColor: [
-                    '#FF8A00', 
-                    '#9D4EDD', 
-                    '#00F5D4', 
-                    '#FF007F', 
+                    '#FF8A00',
+                    '#9D4EDD',
+                    '#00F5D4',
+                    '#FF007F',
                     '#FFD60A',
-                    '#7209B7'  
+                    '#7209B7'
                 ]
             }]
         },
@@ -223,7 +223,7 @@
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    display: false 
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: '#141230',
@@ -247,6 +247,35 @@
             }
         }
     });
+
+    function atualizarContagemAnimes() {
+        fetch("/usuarios/contarAnimes")
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    return resposta.json();
+                }
+            })
+            .then(function (dados) {
+                if (!dados) return;
+
+                let nomes = [];
+                let totais = [];
+
+                for (let i = 0; i < dados.length; i++) {
+                    nomes.push(dados[i].titulo);
+                    totais.push(dados[i].quantidade);
+                }
+
+                graficoAnimes.data.labels = nomes;
+                graficoAnimes.data.datasets[0].data = totais;
+                graficoAnimes.update();
+            })
+            .catch(function (erro) {
+                console.log("Erro ao buscar contagem de animes:", erro);
+            });
+    }
+
+    atualizarContagemAnimes();
 
     function cadastrarAnime(){
           let NomeAnime = inp_nome_anime.value;
@@ -352,4 +381,43 @@
         return false;
     }
     }
+
+    function adicionar(){
+          let NomeAdd = inp_adicionar.value;
+    if (
+      NomeAdd == "" 
+    ) {
+      erroTotal.innerHTML=
+        `(Informe o nome de 1 anime)`;
+    } 
+    else{
+
+
+    fetch("/usuarios/adicionar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeAnimeaddVar: NomeAdd
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+
+        erroTotal.innerHTML =
+            "seu anime cadastrado olhe ele na dahboard";
+
+        }
+      })
+   
+    }
+       
+       
+          
+         
+    }
+    
 </script>
