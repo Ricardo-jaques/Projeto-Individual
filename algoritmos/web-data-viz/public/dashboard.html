@@ -382,42 +382,38 @@
     }
     }
 
-    function adicionar(){
-          let NomeAdd = inp_adicionar.value;
-    if (
-      NomeAdd == "" 
-    ) {
-      erroTotal.innerHTML=
-        `(Informe o nome de 1 anime)`;
-    } 
-    else{
+  function adicionar() {
+        let NomeAdd = inp_adicionar.value;
 
+        if (NomeAdd == "") {
+            erroTotal.innerHTML = `(Informe o nome de 1 anime)`;
+        } else {
+            fetch("/usuarios/adicionar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeAnimeaddVar: NomeAdd
+                }),
+            })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
 
-    fetch("/usuarios/adicionar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nomeAnimeaddVar: NomeAdd
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-
-        erroTotal.innerHTML =
-            "seu anime cadastrado olhe ele na dahboard";
-
+                if (resposta.ok) {
+                    erroTotal.innerHTML = "Seu anime foi cadastrado! Olhe ele na dashboard.";
+                    inp_adicionar.value = "";
+                    atualizarContagemAnimes();
+                } else if (resposta.status == 409) {
+                    erroTotal.innerHTML = "Esse anime já foi adicionado!";
+                } else {
+                    erroTotal.innerHTML = "Não foi possível adicionar o anime.";
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro ao adicionar anime:", erro);
+            });
         }
-      })
-   
-    }
-       
-       
-          
-         
     }
     
 </script>

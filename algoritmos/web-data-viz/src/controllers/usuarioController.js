@@ -124,32 +124,38 @@ function cadastrarAnime(req, res) {
     }
 }
 function adicionar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nomeAnimeadd = req.body.nomeAnimeaddVar;
-    
 
-    // Faça as validações dos valores
     if (nomeAnimeadd == undefined) {
         res.status(400).send("Seu nome De anime está undefined!");
-    }
-     else {
-
-        
-        usuarioModel.adicionar(nomeAnimeadd)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
+    } else {
+        usuarioModel.buscarAnimePorTitulo(nomeAnimeadd)
+            .then(function (resultadoBusca) {
+                if (resultadoBusca.length > 0) {
+                    res.status(409).send("Esse anime já foi adicionado!");
+                } else {
+                    usuarioModel.adicionar(nomeAnimeadd)
+                        .then(function (resultado) {
+                            res.json(resultado);
+                        })
+                        .catch(function (erro) {
+                            console.log(erro);
+                            console.log(
+                                "\nHouve um erro ao realizar o cadastro! Erro: ",
+                                erro.sqlMessage
+                            );
+                            res.status(500).json(erro.sqlMessage);
+                        });
                 }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao verificar anime duplicado! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            });
     }
 }
 
@@ -169,5 +175,5 @@ module.exports = {
     cadastrar,
     cadastrarAnime,
     adicionar,
-    contarAnimes
+    contarAnimes,
 }

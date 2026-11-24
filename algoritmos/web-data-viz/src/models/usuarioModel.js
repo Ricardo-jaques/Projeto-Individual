@@ -59,11 +59,21 @@ function contarAnimes() {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+function buscarAnimePorTitulo(titulo) {
+    console.log("ACESSEI O USUARIO MODEL \n \n function buscarAnimePorTitulo():", titulo);
+
+    var instrucaoSql = `
+        SELECT id_anime, titulo FROM anime WHERE titulo = '${titulo}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     autenticar,
     cadastrar,
     cadastrarAnime,
     adicionar,
-    contarAnimes
+    contarAnimes,
+    buscarAnimePorTitulo
 };
