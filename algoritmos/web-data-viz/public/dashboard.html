@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-   
+
         <div class="cima">
             <div class="logo">
                 <img src="assets/logo.svg" alt="Logo AnimeHub">
@@ -17,50 +17,55 @@
             <div class="seçoes">
                <a href="homeLog.html" class="quadrados">HOME</a>
                <a href="sobre.html" class="quadrados">SOBRE</a>
-               <a href="entrar" class="quadrados">SAIR</a>
+               <a href="index.html" class="quadrados">SAIR</a>
                <a href="dashboard.html" class="quadrados" style="border: 1px solid #FF3DF2; box-shadow: 0px 0px 10px #FF3DF2;">DASHBOARD</a>
             </div>
         </div>
 
         <div class="linha"></div>
 
-      
+
         <div class="dashboard-header">
             <h1 class="branco">Painel do Visitante</h1>
         </div>
 
-      
+        <!-- KPIs: todos os valores são preenchidos pelo JavaScript lá embaixo -->
         <div class="dashboard-kpis-topo">
             <div class="kpi-topo-card">
                 <span class="kpi-topo-label">ANIME MAIS ASSISTIDO</span>
-                <h2 class="azul">Naruto</h2>
+                <h2 class="azul" id="kpi_mais_assistido">-</h2>
+                <span class="kpi-topo-sub" id="kpi_mais_assistido_sub"></span>
             </div>
             <div class="kpi-topo-card">
-                <span class="kpi-topo-label">PESSOAS CADASTRADAS</span>
-                <h2 class="azul">6</h2>
+                <span class="kpi-topo-label">SEUS EPISÓDIOS ASSISTIDOS</span>
+                <h2 class="azul" id="kpi_meus_episodios">0</h2>
+                <span class="kpi-topo-sub" id="kpi_meus_episodios_sub"></span>
             </div>
             <div class="kpi-topo-card">
                 <span class="kpi-topo-label">ANIMES NA LISTA</span>
-                <h2 class="azul">6</h2>
-            </div>
-            <div class="kpi-topo-card">
-                <span class="kpi-topo-label">SEU NÍVEL</span>
-                <h2 class="rosa">Novato</h2>
+                <h2 class="azul" id="kpi_total_animes">0</h2>
+                <span class="kpi-topo-sub" id="kpi_nomes_animes"></span>
             </div>
         </div>
-    
+
         <div style="padding: 0 20px 20px 20px; width: 100%; box-sizing: border-box;">
             <div class="card-chart">
                 <h2 class="azul">Pessoas por anime</h2>
-                <p class="roxo" style="font-size: 0.85rem; margin-bottom: 15px;">Visibilidade geral dos animes cadastrados na plataforma.</p>
+                <p class="roxo" style="font-size: 0.85rem; margin-bottom: 15px;">Os 5 animes com mais pessoas assistindo. Os demais ficam na lista logo abaixo do gráfico.</p>
                 <div class="chart-container-grande">
                     <canvas id="myChart"></canvas>
                 </div>
+
+                <!-- animes que ficaram de fora do top 5 -->
+                <details class="outros-animes">
+                    <summary id="outros_titulo">Ver outros animes (0)</summary>
+                    <div class="outros-lista" id="outros_lista"></div>
+                </details>
             </div>
         </div>
         <div class="dashboard-grid-inferior">
             <div class="cards-lado-a-lado">
-   
+
     <div class="card-venn">
         <h2 class="azul">Quem assiste o mesmo que eu?</h2>
 
@@ -101,14 +106,14 @@
             <button onclick="adicionar()" class="btn-adicionar-neon">+ Adicionar</button>
         </div>
 
-        <p class="texto-vazio-rapido" id="msg_lista_rapida">Você ainda não adicionou nenhum anime.</p>
+        <p class="texto-vazio-rapido" id="msg_lista_rapida">Você pode adicionar cada anime 1 vez. Se outra pessoa já adicionou o mesmo, ele soma +1 na dashboard.</p>
     </div>
 </div>
-          
+
             <div class="dashboard-coluna">
                 <div class="card-gerenciar-animes">
                     <h2 class="azul">Gerenciar Meus Animes & Progresso (%)</h2>
-                    
+
                     <div class="form-grupo-anime">
                         <div>
                             <label class="label-auth">Nome do Anime</label>
@@ -126,81 +131,103 @@
                         </div>
                         <button onclick="cadastrarAnime()" class="btn-submit" style="width: 100%; margin-top: 5px;">salvar o quanto voce assistiu o anime</button>
                     </div>
-                    <span id="erroTotal"></span>
+                    <span id="erroTotal" class="calc-msg"></span>
 
                     <div class="lista-animes-container">
-                        <h3 class="branco" style="font-size: 0.95rem;">Animes Registrados</h3>
+                        <h3 class="branco" style="font-size: 0.95rem;">Meus Animes Registrados</h3>
                         <div id="listaAnimesProgresso" class="lista-animes-wrapper">
-                            <div class="anime-item-card">
-                                <div>
-                                    <strong class="branco" style="font-size: 1rem;">Baki</strong>
-                                    <p class="roxo" style="margin: 3px 0 0 0; font-size: 0.8rem;">Assistidos: 24 | Faltam: 0 (100% Concluído)</p>
-                                </div>
-                                <button class="btn-atualizar-anime" >Atualizar</button>
-                            </div>
+                            <!-- preenchido pelo JavaScript com os animes do usuário -->
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
-       
+
             <div class="dashboard-coluna">
                 <div class="card-calculadora">
                     <h2 class="azul">Calculadora de tempo</h2>
-                    
+
                     <div class="form-grupo-anime">
                         <div>
                             <label class="label-auth">Episódios Assistidos</label>
                             <input type="number" id="inp_calcEpisodios" placeholder="220" class="input-auth"  style="width: 100%; box-sizing: border-box;">
                         </div>
                         <div>
-                            <label class="label-auth">Media Minutos por Episódio</label>
+                            <label class="label-auth">Média de Minutos por Episódio</label>
                             <input type="number" id="inp_calcMinutos" placeholder="23" class="input-auth" style="width: 100%; box-sizing: border-box;">
                         </div>
-                        <button onclick="calcular()">vej por quanto tempo voce assistiu seu anime</button>
-                        <br>
-                        <button onclick="SalvarT()">Salvar tempo no meu nível</button>
+                        <button onclick="calcular()" class="btn-submit" style="margin-top: 5px;">Calcular meu tempo de anime</button>
+                        <button onclick="usarMeusEpisodios()" class="btn-secundario">Usar o total dos meus animes</button>
                     </div>
+                    <span class="calc-msg" id="calc_msg"></span>
 
                     <div class="calculadora-resultados">
                         <div class="calc-box">
                             <span class="calc-titulo">Minutos totais</span>
-                            <span  class="calc-valor" id="Minutos"></span>
+                            <span class="calc-valor" id="Minutos">0</span>
                         </div>
                         <div class="calc-box">
                             <span class="calc-titulo">Horas</span>
-                            <span  class="calc-valor" id="Horast"></span>
+                            <span class="calc-valor" id="Horast">0</span>
                         </div>
                         <div class="calc-box">
                             <span class="calc-titulo">Dias</span>
-                            <span  class="calc-valor" id="Dias"></span>
+                            <span class="calc-valor" id="Dias">0</span>
                         </div>
                     </div>
+
+                    <p class="calc-frase" id="calc_frase">Preencha os campos para ver quanto tempo da sua vida já virou anime.</p>
                 </div>
             </div>
 
         </div>
-</body>
-</html>
+    </div>
 
 <script>
-    let animes = []
+   
+    let ranking = [];      
+    let meusAnimes = [];   
+    let idUsuario = sessionStorage.ID_USUARIO;
+
+    // ===== CALCULADORA =====
     function calcular(){
+        if (inp_calcEpisodios.value == "" || inp_calcMinutos.value == "") {
+            calc_msg.innerHTML = "Preencha os dois campos para calcular.";
+            return;
+        }
+
+        calc_msg.innerHTML = "";
         let calcularEpisodios = Number(inp_calcEpisodios.value);
         let CalcularMinutos = Number(inp_calcMinutos.value);
 
-        let minustosTotais = calcularEpisodios * CalcularMinutos;
-        let Horas = minustosTotais/60;
-        let dias = Horas/24;
+        let minutosTotais = calcularEpisodios * CalcularMinutos;
+        Minutos.innerHTML = Math.round(minutosTotais);
+      
 
-        Minutos.innerHTML=minustosTotais.toFixed(2)
-        Horast.innerHTML=Horas.toFixed(2)
-        Dias.innerHTML=dias.toFixed(2)
-
+       
+        let d = Math.floor(minutosTotais / 1440);
+        let h = Math.floor((minutosTotais % 1440) / 60);
+        let m = Math.floor(minutosTotais % 60);
+        calc_frase.innerHTML = `Você já passou <b class="rosa">${d} dia(s), ${h} hora(s) e ${m} minuto(s)</b> assistindo anime!`;
+          
+        Horast.innerHTML = h;
+        Dias.innerHTML = d;
     }
+
+
+    function usarMeusEpisodios(){
+        let soma = 0;
+        for (let i = 0; i < meusAnimes.length; i++) {
+            soma += Number(meusAnimes[i].episodios_assistidos);
+        }
+        inp_calcEpisodios.value = soma;
+        calc_msg.innerHTML = "Episódios preenchidos com o total dos seus animes. Informe os minutos e calcule.";
+    }
+
+    // ===== GRÁFICO =====
     const ctx = document.getElementById('myChart');
 
-   let graficoAnimes = new Chart(ctx, {
+    let graficoAnimes = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: [],
@@ -213,8 +240,7 @@
                     '#9D4EDD',
                     '#00F5D4',
                     '#FF007F',
-                    '#FFD60A',
-                    '#7209B7'
+                    '#FFD60A'
                 ]
             }]
         },
@@ -248,6 +274,7 @@
         }
     });
 
+
     function atualizarContagemAnimes() {
         fetch("/usuarios/contarAnimes")
             .then(function (resposta) {
@@ -258,135 +285,193 @@
             .then(function (dados) {
                 if (!dados) return;
 
+                ranking = dados;   
+
+          
                 let nomes = [];
                 let totais = [];
-
-                for (let i = 0; i < dados.length; i++) {
-                    nomes.push(dados[i].titulo);
-                    totais.push(dados[i].quantidade);
+                for (let i = 0; i < ranking.length && i < 5; i++) {
+                    nomes.push(ranking[i].titulo);
+                    totais.push(ranking[i].quantidade);
                 }
-
                 graficoAnimes.data.labels = nomes;
                 graficoAnimes.data.datasets[0].data = totais;
                 graficoAnimes.update();
+
+     
+                let htmlOutros = "";
+                let qtdOutros = 0;
+                for (let i = 5; i < ranking.length; i++) {
+                    htmlOutros += `
+                        <div class="outro-anime-item">
+                            <span>${ranking[i].titulo}</span>
+                            <span class="roxo">${ranking[i].quantidade} pessoa(s)</span>
+                        </div>`;
+                    qtdOutros++;
+                }
+                if (qtdOutros == 0) {
+                    htmlOutros = `<p class="roxo" style="margin: 0; font-size: 0.85rem;">Todos os animes já aparecem no gráfico.</p>`;
+                }
+                outros_lista.innerHTML = htmlOutros;
+                outros_titulo.innerHTML = `Ver outros animes (${qtdOutros})`;
+
+                atualizarKpis();
             })
             .catch(function (erro) {
                 console.log("Erro ao buscar contagem de animes:", erro);
             });
     }
 
-    atualizarContagemAnimes();
+
+    function atualizarKpis() {
+
+        if (ranking.length == 0 || ranking[0].quantidade == 0) {
+            kpi_mais_assistido.innerHTML = "Nenhum ainda";
+            kpi_mais_assistido_sub.innerHTML = "";
+        } else {
+            kpi_mais_assistido.innerHTML = ranking[0].titulo;
+            kpi_mais_assistido_sub.innerHTML = ranking[0].quantidade + " pessoa(s) assistindo";
+        }
+
+
+        kpi_total_animes.innerHTML = ranking.length;
+        let nomesLista = "";
+        for (let i = 0; i < ranking.length && i < 3; i++) {
+            if (i > 0) {
+                nomesLista += ", ";
+            }
+            nomesLista += ranking[i].titulo;
+        }
+        if (ranking.length > 3) {
+            nomesLista += ` e mais ${ranking.length - 3}`;
+        }
+        kpi_nomes_animes.innerHTML = nomesLista;
+
+        let somaEpisodios = 0;
+        for (let i = 0; i < meusAnimes.length; i++) {
+            somaEpisodios += Number(meusAnimes[i].episodios_assistidos);
+        }
+        kpi_meus_episodios.innerHTML = somaEpisodios;
+        kpi_meus_episodios_sub.innerHTML = "em " + meusAnimes.length + " anime(s)";
+    }
+
+
+    function carregarMeusAnimes() {
+        if (idUsuario == undefined) {
+            listaAnimesProgresso.innerHTML = `<p class="roxo" style="font-size: 0.85rem;">Faça login para ver o seu progresso.</p>`;
+            return;
+        }
+
+        fetch("/usuarios/meusAnimes/" + idUsuario)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    return resposta.json();
+                }
+            })
+            .then(function (dados) {
+                if (!dados) return;
+
+                meusAnimes = dados;
+
+                let html = "";
+                for (let i = 0; i < meusAnimes.length; i++) {
+                    let assistidos = Number(meusAnimes[i].episodios_assistidos);
+                    let faltam = Number(meusAnimes[i].episodios_faltam);
+                    let total = assistidos + faltam;
+                    let porcentagem = 0;
+                    if (total > 0) {
+                        porcentagem = Math.round((assistidos / total) * 100);
+                    }
+
+                    html += `
+                        <div class="anime-item-card">
+                            <div class="anime-info">
+                                <strong class="branco" style="font-size: 1rem;">${meusAnimes[i].titulo}</strong>
+                                <p class="roxo" style="margin: 3px 0 0 0; font-size: 0.8rem;">Assistidos: ${assistidos} | Faltam: ${faltam} (${porcentagem}% Concluído)</p>
+                                <div class="barra-fundo">
+                                    <div class="barra-progresso" style="width: ${porcentagem}%"></div>
+                                </div>
+                            </div>
+                            <button class="btn-atualizar-anime" onclick="editarAnime(${i})">Atualizar</button>
+                        </div>`;
+                }
+
+                if (meusAnimes.length == 0) {
+                    html = `<p class="roxo" style="font-size: 0.85rem; margin: 0;">Você ainda não registrou nenhum anime.</p>`;
+                }
+
+                listaAnimesProgresso.innerHTML = html;
+                atualizarKpis();
+            })
+            .catch(function (erro) {
+                console.log("Erro ao buscar meus animes:", erro);
+            });
+    }
+
+ 
+    function editarAnime(i) {
+        inp_nome_anime.value = meusAnimes[i].titulo;
+        inp_assistidos.value = meusAnimes[i].episodios_assistidos;
+        inp_faltam.value = meusAnimes[i].episodios_faltam;
+        erroTotal.innerHTML = "Altere os números e clique em salvar.";
+    }
 
     function cadastrarAnime(){
-          let NomeAnime = inp_nome_anime.value;
-    let assistidos = Number(inp_assistidos.value);
-    let faltam = Number(inp_faltam.value);
-    let total = assistidos + faltam
-    let porcentagem = (assistidos/total)*100
-    if (
-      NomeAnime == "" ||
-      assistidos == "" ||
-      faltam == "" 
-    ) {
-      erroTotal.innerHTML=
-        `(Mensagem de erro para todos os campos em branco)`;
-    } 
-    else{
+        let NomeAnime = inp_nome_anime.value.trim();
 
+  
+        if (NomeAnime == "" || inp_assistidos.value == "" || inp_faltam.value == "") {
+            erroTotal.innerHTML = "Preencha o nome, os assistidos e os que faltam.";
+        } else if (idUsuario == undefined) {
+            erroTotal.innerHTML = "Faça login para salvar seu progresso.";
+        } else if (Number(inp_assistidos.value) < 0 || Number(inp_faltam.value) < 0) {
+            erroTotal.innerHTML = "Os números não podem ser negativos.";
+        } else {
+            let assistidos = Number(inp_assistidos.value);
+            let faltam = Number(inp_faltam.value);
 
-    fetch("/usuarios/cadastrarAnime", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-       
-        nomeAnimeVar: NomeAnime,
-        assistidosVar: assistidos,
-        faltamVar: faltam,
-        porcentagemVar : porcentagem,
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-
-        erroTotal.innerHTML =
-            "Progresso do anime cadastrado com sucesso olhe seu Progresso na dahboard";
-
-        }
-      })
-   
-    }
-       
-       
-          
-         
-    }
-    function puxar(){
-        
-        var emailVar = inp_Email.value;
-        var senhaVar = inp_Senha.value;
-
-        if (emailVar == "" || senhaVar == "") {
-            erroTotal.innerHTML = "Insira Algum Valor Nos Campos";
-        }else{
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
+            fetch("/usuarios/cadastrarAnime", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idUsuarioVar: idUsuario,
+                    nomeAnimeVar: NomeAnime,
+                    assistidosVar: assistidos,
+                    faltamVar: faltam,
+                }),
             })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
 
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-
-                    setTimeout(function () {
-                        window.location = "homeLog.html";
-                    }, 1000);
-
-                });
-
-            } else {
-
-                erroTotal.innerHTML=`Houve um erro ao tentar realizar o login!`;
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-        return false;
-    }
+                if (resposta.ok) {
+                    erroTotal.innerHTML = "Progresso salvo com sucesso!";
+                    inp_nome_anime.value = "";
+                    inp_assistidos.value = "";
+                    inp_faltam.value = "";
+                    carregarMeusAnimes();
+                    atualizarContagemAnimes();
+                } else if (resposta.status == 404) {
+                    erroTotal.innerHTML = "Você ainda não adicionou esse anime. Adicione ele primeiro no campo de cima.";
+                } else {
+                    erroTotal.innerHTML = "Não foi possível salvar o progresso.";
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro ao salvar progresso:", erro);
+            });
+        }
     }
 
-  function adicionar() {
-        let NomeAdd = inp_adicionar.value;
+
+    function adicionar() {
+        let NomeAdd = inp_adicionar.value.trim();
 
         if (NomeAdd == "") {
-            erroTotal.innerHTML = `(Informe o nome de 1 anime)`;
+            msg_lista_rapida.innerHTML = "Informe o nome de 1 anime.";
+        } else if (idUsuario == undefined) {
+            msg_lista_rapida.innerHTML = "Faça login para adicionar um anime.";
         } else {
             fetch("/usuarios/adicionar", {
                 method: "POST",
@@ -394,6 +479,7 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
+                    idUsuarioVar: idUsuario,
                     nomeAnimeaddVar: NomeAdd
                 }),
             })
@@ -401,13 +487,14 @@
                 console.log("resposta: ", resposta);
 
                 if (resposta.ok) {
-                    erroTotal.innerHTML = "Seu anime foi cadastrado! Olhe ele na dashboard.";
+                    msg_lista_rapida.innerHTML = "Seu anime foi cadastrado! Olhe ele na dashboard.";
                     inp_adicionar.value = "";
                     atualizarContagemAnimes();
+                    carregarMeusAnimes();
                 } else if (resposta.status == 409) {
-                    erroTotal.innerHTML = "Esse anime já foi adicionado!";
+                    msg_lista_rapida.innerHTML = "Você já adicionou esse anime!";
                 } else {
-                    erroTotal.innerHTML = "Não foi possível adicionar o anime.";
+                    msg_lista_rapida.innerHTML = "Não foi possível adicionar o anime.";
                 }
             })
             .catch(function (erro) {
@@ -415,5 +502,10 @@
             });
         }
     }
-    
+
+  
+    atualizarContagemAnimes();
+    carregarMeusAnimes();
 </script>
+</body>
+</html>
