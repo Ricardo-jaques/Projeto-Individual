@@ -15,12 +15,11 @@ function autenticar(req, res) {
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); 
 
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        // CORRIGIDO: a coluna do banco se chama id_usuario (antes estava .id e vinha undefined)
                         res.json({
                             id: resultadoAutenticar[0].id_usuario,
                             email: resultadoAutenticar[0].email,
@@ -45,13 +44,11 @@ function autenticar(req, res) {
 }
 
 function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var nivel = req.body.nivelServer;
 
-    // Faça as validações dos valores
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
     } else if (email == undefined) {
@@ -80,14 +77,12 @@ function cadastrar(req, res) {
 }
 
 
-// Atualiza o progresso (assistidos / faltam) de um anime que o usuário logado JÁ adicionou
 function cadastrarAnime(req, res) {
     var idUsuario = req.body.idUsuarioVar;
     var nomeAnime = req.body.nomeAnimeVar;
     var assistidos = req.body.assistidosVar;
     var faltam = req.body.faltamVar;
 
-    // Faça as validações dos valores
     if (idUsuario == undefined) {
         res.status(400).send("Seu id de usuário está undefined!");
     } else if (nomeAnime == undefined) {
@@ -98,13 +93,11 @@ function cadastrarAnime(req, res) {
         res.status(400).send("Seu faltam está undefined!");
     } else {
 
-        // 1º confere se ESTE usuário já adicionou esse anime
         usuarioModel.buscarVinculo(idUsuario, nomeAnime)
             .then(function (resultadoVinculo) {
                 if (resultadoVinculo.length == 0) {
                     res.status(404).send("Você ainda não adicionou esse anime!");
                 } else {
-                    // 2º já adicionou: atualiza o progresso dele
                     usuarioModel.cadastrarAnime(idUsuario, nomeAnime, assistidos, faltam)
                         .then(function (resultado) {
                             res.json(resultado);
@@ -130,9 +123,6 @@ function cadastrarAnime(req, res) {
     }
 }
 
-// Adiciona um anime para o usuário logado.
-// - Cada usuário só pode adicionar o MESMO anime 1 vez.
-// - Usuários diferentes podem adicionar o mesmo anime (cada um soma +1 na dashboard).
 function adicionar(req, res) {
     var idUsuario = req.body.idUsuarioVar;
     var nomeAnimeadd = req.body.nomeAnimeaddVar;
@@ -143,7 +133,6 @@ function adicionar(req, res) {
         res.status(400).send("Seu nome De anime está undefined!");
     } else {
 
-        // função pequena que liga o usuário ao anime (soma +1 na dashboard)
         function ligar() {
             usuarioModel.vincularUsuario(idUsuario, nomeAnimeadd)
                 .then(function (resultadoVinculo) {
@@ -155,20 +144,16 @@ function adicionar(req, res) {
                 });
         }
 
-        // 1º este usuário já adicionou esse anime?
         usuarioModel.buscarVinculo(idUsuario, nomeAnimeadd)
             .then(function (resultadoVinculo) {
                 if (resultadoVinculo.length > 0) {
                     res.status(409).send("Você já adicionou esse anime!");
                 } else {
-                    // 2º o anime já existe na tabela anime (outra pessoa já adicionou)?
                     usuarioModel.buscarAnimePorTitulo(nomeAnimeadd)
                         .then(function (resultadoBusca) {
                             if (resultadoBusca.length > 0) {
-                                // já existe: só liga o usuário a ele
                                 ligar();
                             } else {
-                                // não existe: cria o anime e depois liga o usuário
                                 usuarioModel.adicionar(nomeAnimeadd)
                                     .then(function (resultado) {
                                         ligar();

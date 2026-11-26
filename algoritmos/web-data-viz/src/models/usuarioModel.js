@@ -61,7 +61,6 @@ function adicionar(nomeAnimeadd){
     return database.executar(instrucaoSql);
 }
 
-// Liga o usuário que adicionou ao anime que acabou de ser criado
 function vincularUsuario(idUsuario, nomeAnime){
     console.log("ACESSEI O USUARIO MODEL \n function vincularUsuario():", idUsuario, nomeAnime);
 
@@ -73,7 +72,6 @@ function vincularUsuario(idUsuario, nomeAnime){
     return database.executar(instrucaoSql);
 }
 
-// Ranking: quantas PESSOAS assistem cada anime (maior primeiro)
 function contarAnimes() {
     console.log("ACESSEI O USUARIO MODEL \n \n function contarAnimes()");
 
@@ -100,7 +98,6 @@ function buscarAnimePorTitulo(titulo) {
     return database.executar(instrucaoSql);
 }
 
-// Animes + progresso de UM usuário
 function meusAnimes(idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n function meusAnimes():", idUsuario);
 
@@ -118,7 +115,6 @@ function meusAnimes(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-// Usuários que assistem um anime (id e nome)
 function usuariosDoAnime(titulo) {
     console.log("ACESSEI O USUARIO MODEL \n function usuariosDoAnime():", titulo);
 
