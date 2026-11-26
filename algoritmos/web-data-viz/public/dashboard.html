@@ -29,7 +29,7 @@
             <h1 class="branco">Painel do Visitante</h1>
         </div>
 
-        <!-- KPIs: todos os valores são preenchidos pelo JavaScript lá embaixo -->
+       
         <div class="dashboard-kpis-topo">
             <div class="kpi-topo-card">
                 <span class="kpi-topo-label">ANIME MAIS ASSISTIDO</span>
@@ -56,7 +56,7 @@
                     <canvas id="myChart"></canvas>
                 </div>
 
-                <!-- animes que ficaram de fora do top 5 -->
+              
                 <details class="outros-animes">
                     <summary id="outros_titulo">Ver outros animes (0)</summary>
                     <div class="outros-lista" id="outros_lista"></div>
@@ -80,20 +80,32 @@
             </div>
         </div>
 
+        <button onclick="compararAnimes()" class="btn-submit" style="width: 100%; margin-top: 12px;">Comparar</button>
+        <span class="calc-msg" id="venn_msg"></span>
+
         <div class="venn-area">
-            <div class="venn-circulo venn-esquerda">
-                <span class="venn-numero" id="num_so_a">2</span>
-                <span class="venn-legenda" id="txt_so_a">só Naruto</span>
+            <div class="venn-circulo venn-esquerda" id="venn_circ_a" onclick="mostrarNomes('a')">
+                <span class="venn-numero" id="num_so_a">0</span>
+                <span class="venn-legenda" id="txt_so_a">só o anime A</span>
             </div>
 
-            <div class="venn-centro">
-                <span class="venn-numero" id="num_ambos">2</span>
+            <div class="venn-centro" id="venn_circ_ambos" onclick="mostrarNomes('ambos')">
+                <span class="venn-numero" id="num_ambos">0</span>
                 <span class="venn-legenda">ambos</span>
             </div>
 
-            <div class="venn-circulo venn-direita">
-                <span class="venn-numero" id="num_so_b">1</span>
-                <span class="venn-legenda" id="txt_so_b">só Bleach</span>
+            <div class="venn-circulo venn-direita" id="venn_circ_b" onclick="mostrarNomes('b')">
+                <span class="venn-numero" id="num_so_b">0</span>
+                <span class="venn-legenda" id="txt_so_b">só o anime B</span>
+            </div>
+        </div>
+
+        <p class="venn-dica">Clique em uma parte do diagrama para ver quem são as pessoas.</p>
+
+        <div class="venn-lista">
+            <h3 id="venn_titulo_lista">Quem assiste os dois</h3>
+            <div class="venn-nomes" id="venn_nomes">
+                <p class="roxo" style="margin: 0; font-size: 0.85rem;">Digite dois animes e clique em Comparar.</p>
             </div>
         </div>
     </div>
@@ -136,7 +148,7 @@
                     <div class="lista-animes-container">
                         <h3 class="branco" style="font-size: 0.95rem;">Meus Animes Registrados</h3>
                         <div id="listaAnimesProgresso" class="lista-animes-wrapper">
-                            <!-- preenchido pelo JavaScript com os animes do usuário -->
+                            
                         </div>
                     </div>
                 </div>
@@ -189,7 +201,13 @@
     let meusAnimes = [];   
     let idUsuario = sessionStorage.ID_USUARIO;
 
-    // ===== CALCULADORA =====
+    // vetores do "Quem assiste o mesmo que eu?"
+    let vennSoA = [];      // pessoas que assistem só o anime A
+    let vennAmbos = [];    // pessoas que assistem os dois
+    let vennSoB = [];      // pessoas que assistem só o anime B
+    let nomeA = "";
+    let nomeB = "";
+
     function calcular(){
         if (inp_calcEpisodios.value == "" || inp_calcMinutos.value == "") {
             calc_msg.innerHTML = "Preencha os dois campos para calcular.";
@@ -215,6 +233,130 @@
     }
 
 
+    // ===== QUEM ASSISTE O MESMO QUE EU (Venn) =====
+    function compararAnimes() {
+        nomeA = inp_anime_a.value.trim();
+        nomeB = inp_anime_b.value.trim();
+
+        if (nomeA == "" || nomeB == "") {
+            venn_msg.innerHTML = "Digite o nome dos dois animes.";
+        } else if (nomeA.toLowerCase() == nomeB.toLowerCase()) {
+            venn_msg.innerHTML = "Escolha dois animes diferentes.";
+        } else {
+            venn_msg.innerHTML = "";
+
+            // 1º busca quem assiste o anime A
+            fetch("/usuarios/usuariosDoAnime/" + encodeURIComponent(nomeA))
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        return resposta.json();
+                    }
+                })
+                .then(function (listaA) {
+                    if (!listaA) return;
+
+                    // 2º busca quem assiste o anime B
+                    fetch("/usuarios/usuariosDoAnime/" + encodeURIComponent(nomeB))
+                        .then(function (resposta) {
+                            if (resposta.ok) {
+                                return resposta.json();
+                            }
+                        })
+                        .then(function (listaB) {
+                            if (!listaB) return;
+
+                            vennSoA = [];
+                            vennAmbos = [];
+                            vennSoB = [];
+
+                            // quem está em A: também está em B? (ambos) ou só em A?
+                            for (let i = 0; i < listaA.length; i++) {
+                                let achou = false;
+                                for (let j = 0; j < listaB.length; j++) {
+                                    if (listaA[i].id_usuario == listaB[j].id_usuario) {
+                                        achou = true;
+                                    }
+                                }
+                                if (achou) {
+                                    vennAmbos.push(listaA[i]);
+                                } else {
+                                    vennSoA.push(listaA[i]);
+                                }
+                            }
+
+                            // quem está em B mas não está em A
+                            for (let j = 0; j < listaB.length; j++) {
+                                let achou = false;
+                                for (let i = 0; i < listaA.length; i++) {
+                                    if (listaB[j].id_usuario == listaA[i].id_usuario) {
+                                        achou = true;
+                                    }
+                                }
+                                if (!achou) {
+                                    vennSoB.push(listaB[j]);
+                                }
+                            }
+
+                            num_so_a.innerHTML = vennSoA.length;
+                            num_ambos.innerHTML = vennAmbos.length;
+                            num_so_b.innerHTML = vennSoB.length;
+                            txt_so_a.innerHTML = "só " + nomeA;
+                            txt_so_b.innerHTML = "só " + nomeB;
+
+                            mostrarNomes("ambos");
+                        })
+                        .catch(function (erro) {
+                            console.log("Erro ao buscar usuários do anime B:", erro);
+                        });
+                })
+                .catch(function (erro) {
+                    console.log("Erro ao buscar usuários do anime A:", erro);
+                });
+        }
+    }
+
+    // mostra os nomes do grupo que foi clicado ("a", "ambos" ou "b")
+    function mostrarNomes(grupo) {
+        let lista = [];
+        let titulo = "";
+
+        if (nomeA == "" || nomeB == "") {
+            return;   // ainda não comparou nada
+        }
+
+        if (grupo == "a") {
+            lista = vennSoA;
+            titulo = "Quem assiste só " + nomeA;
+        } else if (grupo == "b") {
+            lista = vennSoB;
+            titulo = "Quem assiste só " + nomeB;
+        } else {
+            lista = vennAmbos;
+            titulo = "Quem assiste " + nomeA + " e " + nomeB;
+        }
+
+        let html = "";
+        for (let i = 0; i < lista.length; i++) {
+            let nome = lista[i].nome;
+            if (lista[i].id_usuario == idUsuario) {
+                nome += " (você)";
+            }
+            html += `<span class="venn-nome">${nome}</span>`;
+        }
+        if (lista.length == 0) {
+            html = `<p class="roxo" style="margin: 0; font-size: 0.85rem;">Ninguém por aqui ainda.</p>`;
+        }
+
+        venn_titulo_lista.innerHTML = titulo;
+        venn_nomes.innerHTML = html;
+
+        // destaca a parte clicada
+        venn_circ_a.classList.remove("venn-ativo");
+        venn_circ_ambos.classList.remove("venn-ativo");
+        venn_circ_b.classList.remove("venn-ativo");
+        document.getElementById("venn_circ_" + grupo).classList.add("venn-ativo");
+    }
+
     function usarMeusEpisodios(){
         let soma = 0;
         for (let i = 0; i < meusAnimes.length; i++) {
@@ -224,7 +366,6 @@
         calc_msg.innerHTML = "Episódios preenchidos com o total dos seus animes. Informe os minutos e calcule.";
     }
 
-    // ===== GRÁFICO =====
     const ctx = document.getElementById('myChart');
 
     let graficoAnimes = new Chart(ctx, {

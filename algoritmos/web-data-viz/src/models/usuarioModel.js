@@ -22,20 +22,21 @@ function cadastrar(nome, email, senha,nivel) {
 }
 
 
+// Atualiza o progresso de UM usuário em UM anime que ele JÁ adicionou
 function cadastrarAnime(idUsuario, nomeAnime, assistidos, faltam){
     console.log("ACESSEI O USUARIO MODEL \n function cadastrarAnime():", idUsuario, nomeAnime, assistidos, faltam);
 
     var instrucaoSql = `
-       UPDATE usuario_anime
-SET episodios_assistidos = ${assistidos}, episodios_faltam = ${faltam}
-WHERE id_usuario = ${idUsuario}
-AND id_anime = (SELECT id_anime FROM anime WHERE titulo = '${nomeAnime}');;
+        UPDATE usuario_anime
+        SET episodios_assistidos = ${assistidos}, episodios_faltam = ${faltam}
+        WHERE id_usuario = ${idUsuario}
+        AND id_anime = (SELECT id_anime FROM anime WHERE titulo = '${nomeAnime}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-
+// Confere se ESTE usuário já adicionou ESTE anime
 function buscarVinculo(idUsuario, nomeAnime){
     console.log("ACESSEI O USUARIO MODEL \n function buscarVinculo():", idUsuario, nomeAnime);
 
@@ -49,7 +50,7 @@ function buscarVinculo(idUsuario, nomeAnime){
     return database.executar(instrucaoSql);
 }
 
-
+// Cria o anime na tabela anime (só chega aqui se o nome ainda não existe para ninguém)
 function adicionar(nomeAnimeadd){
     console.log("ACESSEI O USUARIO MODEL \n function adicionar():", nomeAnimeadd);
 
@@ -60,7 +61,7 @@ function adicionar(nomeAnimeadd){
     return database.executar(instrucaoSql);
 }
 
-
+// Liga o usuário que adicionou ao anime que acabou de ser criado
 function vincularUsuario(idUsuario, nomeAnime){
     console.log("ACESSEI O USUARIO MODEL \n function vincularUsuario():", idUsuario, nomeAnime);
 
@@ -72,7 +73,7 @@ function vincularUsuario(idUsuario, nomeAnime){
     return database.executar(instrucaoSql);
 }
 
-
+// Ranking: quantas PESSOAS assistem cada anime (maior primeiro)
 function contarAnimes() {
     console.log("ACESSEI O USUARIO MODEL \n \n function contarAnimes()");
 
@@ -99,6 +100,7 @@ function buscarAnimePorTitulo(titulo) {
     return database.executar(instrucaoSql);
 }
 
+// Animes + progresso de UM usuário
 function meusAnimes(idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n function meusAnimes():", idUsuario);
 
@@ -116,6 +118,23 @@ function meusAnimes(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+// Usuários que assistem um anime (id e nome)
+function usuariosDoAnime(titulo) {
+    console.log("ACESSEI O USUARIO MODEL \n function usuariosDoAnime():", titulo);
+
+    var instrucaoSql = `
+        SELECT id_usuario, nome
+        FROM usuario
+        WHERE id_usuario IN (
+            SELECT id_usuario FROM usuario_anime
+            WHERE id_anime = (SELECT id_anime FROM anime WHERE titulo = '${titulo}')
+        )
+        ORDER BY nome ASC;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -125,5 +144,6 @@ module.exports = {
     buscarVinculo,
     contarAnimes,
     buscarAnimePorTitulo,
-    meusAnimes
+    meusAnimes,
+    usuariosDoAnime
 };
