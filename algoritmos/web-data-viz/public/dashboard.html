@@ -201,10 +201,10 @@
     let meusAnimes = [];   
     let idUsuario = sessionStorage.ID_USUARIO;
 
-    // vetores do "Quem assiste o mesmo que eu?"
-    let vennSoA = [];      // pessoas que assistem só o anime A
-    let vennAmbos = [];    // pessoas que assistem os dois
-    let vennSoB = [];      // pessoas que assistem só o anime B
+   
+    let vennSoA = [];      
+    let vennAmbos = [];    
+    let vennSoB = [];      
     let nomeA = "";
     let nomeB = "";
 
@@ -233,7 +233,7 @@
     }
 
 
-    // ===== QUEM ASSISTE O MESMO QUE EU (Venn) =====
+
     function compararAnimes() {
         nomeA = inp_anime_a.value.trim();
         nomeB = inp_anime_b.value.trim();
@@ -245,7 +245,7 @@
         } else {
             venn_msg.innerHTML = "";
 
-            // 1º busca quem assiste o anime A
+
             fetch("/usuarios/usuariosDoAnime/" + encodeURIComponent(nomeA))
                 .then(function (resposta) {
                     if (resposta.ok) {
@@ -255,7 +255,7 @@
                 .then(function (listaA) {
                     if (!listaA) return;
 
-                    // 2º busca quem assiste o anime B
+                 
                     fetch("/usuarios/usuariosDoAnime/" + encodeURIComponent(nomeB))
                         .then(function (resposta) {
                             if (resposta.ok) {
@@ -269,7 +269,7 @@
                             vennAmbos = [];
                             vennSoB = [];
 
-                            // quem está em A: também está em B? (ambos) ou só em A?
+                            
                             for (let i = 0; i < listaA.length; i++) {
                                 let achou = false;
                                 for (let j = 0; j < listaB.length; j++) {
@@ -284,7 +284,7 @@
                                 }
                             }
 
-                            // quem está em B mas não está em A
+                          
                             for (let j = 0; j < listaB.length; j++) {
                                 let achou = false;
                                 for (let i = 0; i < listaA.length; i++) {
@@ -315,13 +315,13 @@
         }
     }
 
-    // mostra os nomes do grupo que foi clicado ("a", "ambos" ou "b")
+
     function mostrarNomes(grupo) {
         let lista = [];
         let titulo = "";
 
         if (nomeA == "" || nomeB == "") {
-            return;   // ainda não comparou nada
+     
         }
 
         if (grupo == "a") {
@@ -350,7 +350,7 @@
         venn_titulo_lista.innerHTML = titulo;
         venn_nomes.innerHTML = html;
 
-        // destaca a parte clicada
+
         venn_circ_a.classList.remove("venn-ativo");
         venn_circ_ambos.classList.remove("venn-ativo");
         venn_circ_b.classList.remove("venn-ativo");
