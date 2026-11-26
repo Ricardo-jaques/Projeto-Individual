@@ -22,7 +22,7 @@ function cadastrar(nome, email, senha,nivel) {
 }
 
 
-// Atualiza o progresso de UM usuário em UM anime que ele JÁ adicionou
+
 function cadastrarAnime(idUsuario, nomeAnime, assistidos, faltam){
     console.log("ACESSEI O USUARIO MODEL \n function cadastrarAnime():", idUsuario, nomeAnime, assistidos, faltam);
 
@@ -36,7 +36,7 @@ function cadastrarAnime(idUsuario, nomeAnime, assistidos, faltam){
     return database.executar(instrucaoSql);
 }
 
-// Confere se ESTE usuário já adicionou ESTE anime
+
 function buscarVinculo(idUsuario, nomeAnime){
     console.log("ACESSEI O USUARIO MODEL \n function buscarVinculo():", idUsuario, nomeAnime);
 
@@ -50,7 +50,7 @@ function buscarVinculo(idUsuario, nomeAnime){
     return database.executar(instrucaoSql);
 }
 
-// Cria o anime na tabela anime (só chega aqui se o nome ainda não existe para ninguém)
+
 function adicionar(nomeAnimeadd){
     console.log("ACESSEI O USUARIO MODEL \n function adicionar():", nomeAnimeadd);
 

@@ -24,8 +24,6 @@ create table usuario_anime (
     id_anime int not null,
     episodios_assistidos int not null default 0,
     episodios_faltam int not null default 0,
-    status_anime varchar(20) not null default 'planejado',
-    atualizado_em timestamp default current_timestamp,
     primary key (id_usuario, id_anime),
     constraint fk_ua_usuario
         foreign key (id_usuario) references usuario(id_usuario),
@@ -44,8 +42,54 @@ LEFT JOIN usuario_anime ua ON ua.id_anime = a.id_anime
 GROUP BY a.id_anime, a.titulo
 ORDER BY quantidade DESC, a.titulo ASC;
 
-
-
+ SELECT id_usuario, nome, email FROM usuario WHERE email = 'ricardo@gmail.com' AND senha = 12345;
+ 
+ INSERT INTO usuario (nome, email, senha) VALUES 
+ ('Sergio', 'Sergio@gmail.com', '13123');
+ 
+  UPDATE usuario_anime
+        SET episodios_assistidos = 20, episodios_faltam = 5
+        WHERE id_usuario = 1
+        AND id_anime = (SELECT id_anime FROM anime WHERE titulo = 'jujutsu');
+			
+            
+             SELECT ua.id_usuario
+        FROM usuario_anime ua
+        JOIN anime a ON a.id_anime = ua.id_anime
+        WHERE ua.id_usuario = 1 AND a.titulo = 'naruto';
+        
+         INSERT INTO anime (titulo) VALUES ('tensei shitara no slime');
+         
+          INSERT INTO usuario_anime (id_usuario, id_anime)
+        SELECT 2, id_anime FROM anime WHERE titulo = 'jujutsu';
+        
+         SELECT
+            a.titulo,
+            COUNT(ua.id_usuario) AS quantidade
+        FROM anime a
+        LEFT JOIN usuario_anime ua ON ua.id_anime = a.id_anime
+        GROUP BY a.id_anime, a.titulo
+        ORDER BY quantidade DESC, a.titulo ASC;
+        
+         SELECT id_anime, titulo FROM anime WHERE titulo = 'naruto';
+         
+            SELECT
+            a.titulo,
+            ua.episodios_assistidos,
+            ua.episodios_faltam
+        FROM usuario_anime ua
+        JOIN anime a ON a.id_anime = ua.id_anime
+        WHERE ua.id_usuario =2
+        ORDER BY a.titulo ASC;
+        
+         SELECT id_usuario, nome
+        FROM usuario
+        WHERE id_usuario IN (
+            SELECT id_usuario FROM usuario_anime
+            WHERE id_anime = (SELECT id_anime FROM anime WHERE titulo = 'dragon ball')
+        )
+        ORDER BY nome ASC;
+        
 select * from usuario;
 select * from anime;
 select * from usuario_anime;
